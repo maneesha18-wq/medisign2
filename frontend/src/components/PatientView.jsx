@@ -1,31 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
     Users, Plus, X, User, Calendar, Activity, 
-    Globe, ShieldCheck, Search, ChevronRight 
+    Globe, ShieldCheck, Search, ChevronRight,
+    ChevronLeft
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const containerVariants = {
-    hidden: { opacity: 0 },
     visible: { 
         opacity: 1, 
-        transition: { staggerChildren: 0.1 } 
+        transition: { staggerChildren: 0.05 } 
     }
 };
 
 const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
     visible: { 
-        opacity: 1, y: 0, 
-        transition: { duration: 0.5, ease: "easeOut" } 
+        opacity: 1, 
+        transition: { duration: 0.2 } 
     }
 };
+
+const ITEMS_PER_PAGE = 6;
 
 const PatientView = () => {
     const [patients, setPatients] = useState([]);
     const [activePatientId, setActivePatientId] = useState(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [debouncedSearch, setDebouncedSearch] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
 
     const [form, setForm] = useState({
         name: '',
@@ -55,6 +58,15 @@ const PatientView = () => {
         }
     }, []);
 
+    // Debounce search
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(searchQuery);
+            setCurrentPage(1); // Reset to page 1 on search
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [searchQuery]);
+
     const handleCreate = (e) => {
         e.preventDefault();
         const newPatient = {
@@ -78,7 +90,16 @@ const PatientView = () => {
         window.dispatchEvent(new Event('patientChanged'));
     };
 
-    const filteredPatients = patients.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    const filteredPatients = useMemo(() => {
+        return patients.filter(p => p.name.toLowerCase().includes(debouncedSearch.toLowerCase()));
+    }, [patients, debouncedSearch]);
+
+    const paginatedPatients = useMemo(() => {
+        const start = (currentPage - 1) * ITEMS_PER_PAGE;
+        return filteredPatients.slice(start, start + ITEMS_PER_PAGE);
+    }, [filteredPatients, currentPage]);
+
+    const totalPages = Math.ceil(filteredPatients.length / ITEMS_PER_PAGE);
 
     const langMap = {
         'en': 'English',
@@ -89,7 +110,7 @@ const PatientView = () => {
     };
 
     return (
-        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-8">
+        <motion.div variants={containerVariants} animate="visible" className="space-y-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <motion.div variants={itemVariants}>
                     <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Patient Directory</h1>
@@ -117,10 +138,11 @@ const PatientView = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredPatients.map(patient => (
+                {paginatedPatients.map(patient => (
                     <motion.div
                         key={patient.id}
                         variants={itemVariants}
+                        animate="visible"
                         whileHover={{ y: -4, transition: { duration: 0.2 } }}
                         className={`bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border transition-colors flex flex-col justify-between ${activePatientId === patient.id ? 'border-emerald-500 ring-1 ring-emerald-500 shadow-emerald-100/50 dark:shadow-none' : 'border-slate-100 dark:border-slate-800 hover:border-medical-200'}`}
                     >
@@ -171,6 +193,40 @@ const PatientView = () => {
                     </motion.div>
                 ))}
             </div>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+                <div className="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-800">
+                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
+                        Showing <span className="font-bold text-slate-800 dark:text-slate-200">{(currentPage - 1) * ITEMS_PER_PAGE + 1}</span> to <span className="font-bold text-slate-800 dark:text-slate-200">{Math.min(currentPage * ITEMS_PER_PAGE, filteredPatients.length)}</span> of <span className="font-bold text-slate-800 dark:text-slate-200">{filteredPatients.length}</span> patients
+                    </p>
+                    <div className="flex items-center space-x-2">
+                        <button
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage(prev => prev - 1)}
+                            className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-400 hover:text-medical-600 hover:bg-medical-50 dark:hover:bg-medical-900/20 disabled:opacity-30 disabled:hover:bg-transparent transition-all"
+                        >
+                            <ChevronLeft className="h-5 w-5" />
+                        </button>
+                        {[...Array(totalPages)].map((_, i) => (
+                            <button
+                                key={i}
+                                onClick={() => setCurrentPage(i + 1)}
+                                className={`h-10 w-10 rounded-xl font-bold transition-all ${currentPage === i + 1 ? 'bg-medical-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+                            >
+                                {i + 1}
+                            </button>
+                        ))}
+                        <button
+                            disabled={currentPage === totalPages}
+                            onClick={() => setCurrentPage(prev => prev + 1)}
+                            className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-400 hover:text-medical-600 hover:bg-medical-50 dark:hover:bg-medical-900/20 disabled:opacity-30 disabled:hover:bg-transparent transition-all"
+                        >
+                            <ChevronRight className="h-5 w-5" />
+                        </button>
+                    </div>
+                </div>
+            )}
 
             <AnimatePresence>
                 {isMenuOpen && (

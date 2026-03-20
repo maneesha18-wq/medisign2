@@ -27,6 +27,9 @@ const HistoryView = () => {
     const [patients, setPatients] = React.useState([]);
     const [selectedPatient, setSelectedPatient] = React.useState('all');
     const [searchQuery, setSearchQuery] = React.useState('');
+    const [debouncedSearch, setDebouncedSearch] = React.useState('');
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const ITEMS_PER_PAGE = 10;
 
     React.useEffect(() => {
         const localHistory = JSON.parse(localStorage.getItem('medisign_history') || '[]');
@@ -36,12 +39,30 @@ const HistoryView = () => {
         setPatients(localPatients);
     }, []);
 
-    const filteredLogs = logs.filter(log => {
-        const matchesSearch = log.term.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                              log.source.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesPatient = selectedPatient === 'all' || log.patientId === selectedPatient;
-        return matchesSearch && matchesPatient;
-    });
+    // Debounce search
+    React.useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(searchQuery);
+            setCurrentPage(1); // Reset to page 1 on search
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [searchQuery]);
+
+    const filteredLogs = React.useMemo(() => {
+        return logs.filter(log => {
+            const matchesSearch = log.term.toLowerCase().includes(debouncedSearch.toLowerCase()) || 
+                                  log.source.toLowerCase().includes(debouncedSearch.toLowerCase());
+            const matchesPatient = selectedPatient === 'all' || log.patientId === selectedPatient;
+            return matchesSearch && matchesPatient;
+        });
+    }, [logs, debouncedSearch, selectedPatient]);
+
+    const paginatedLogs = React.useMemo(() => {
+        const start = (currentPage - 1) * ITEMS_PER_PAGE;
+        return filteredLogs.slice(start, start + ITEMS_PER_PAGE);
+    }, [filteredLogs, currentPage]);
+
+    const totalPages = Math.ceil(filteredLogs.length / ITEMS_PER_PAGE);
 
     const handleExportPDF = (e) => {
         e.preventDefault();
@@ -124,7 +145,7 @@ const HistoryView = () => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
-                            {filteredLogs.map((log) => (
+                            {paginatedLogs.map((log) => (
                                 <tr key={log.id} className="hover:bg-medical-50/30 dark:hover:bg-medical-500/10 transition-colors group">
                                     <td className="px-6 py-4">
                                         <div className="flex items-center">
@@ -176,18 +197,33 @@ const HistoryView = () => {
                 </div>
 
                 <div className="p-6 bg-slate-50/50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                    <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">Showing {Math.min(7, filteredLogs.length)} of {filteredLogs.length} results</span>
+                    <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+                        Showing {Math.min(paginatedLogs.length, filteredLogs.length)} of {filteredLogs.length} results
+                    </span>
                     <div className="flex items-center space-x-2">
-                        <button className="p-2 text-slate-400 dark:text-slate-600 cursor-not-allowed">
+                        <button 
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                            className="p-2 text-slate-400 dark:text-slate-600 hover:text-medical-600 disabled:opacity-30 disabled:cursor-not-allowed"
+                        >
                             <ChevronLeft className="h-5 w-5" />
                         </button>
-                        <button className="p-2 text-medical-600 dark:text-medical-400 bg-white dark:bg-slate-800 border border-medical-200 dark:border-medical-900/50 rounded-lg shadow-sm font-bold px-4 hover:bg-medical-50 dark:hover:bg-medical-500/10 transition-colors">
-                            1
-                        </button>
-                        <button className="p-2 text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm dark:hover:shadow-none rounded-lg px-4 transition-all">
-                            2
-                        </button>
-                        <button className="p-2 text-slate-500 dark:text-slate-400">
+                        
+                        {[...Array(totalPages)].map((_, i) => (
+                            <button
+                                key={i}
+                                onClick={() => setCurrentPage(i + 1)}
+                                className={`p-2 rounded-lg shadow-sm font-bold px-4 transition-colors ${currentPage === i + 1 ? 'bg-medical-600 text-white' : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'}`}
+                            >
+                                {i + 1}
+                            </button>
+                        ))}
+
+                        <button 
+                            disabled={currentPage === totalPages}
+                            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                            className="p-2 text-slate-500 dark:text-slate-400 hover:text-medical-600 disabled:opacity-30 disabled:cursor-not-allowed"
+                        >
                             <ChevronRight className="h-5 w-5" />
                         </button>
                     </div>

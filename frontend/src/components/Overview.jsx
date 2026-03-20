@@ -83,11 +83,11 @@ const Overview = () => {
             } else {
                 console.warn('[Overview] /api/stats returned unexpected shape:', data);
                 // Backend hasn't restarted yet — show mock data
-                setStats({ total_predictions: 124, high_confidence_matches: 112, average_confidence: 94, active_terms: 10 });
+                setStats({ total_predictions: 124, high_confidence_matches: 112, active_terms: 10 });
             }
         } catch (err) {
             console.error('[Overview] Stats fetch failed:', err);
-            setStats({ total_predictions: 124, high_confidence_matches: 112, average_confidence: 94, active_terms: 10 });
+            setStats({ total_predictions: 124, high_confidence_matches: 112, active_terms: 10 });
         } finally {
             setLoading(false);
         }
@@ -117,7 +117,7 @@ const Overview = () => {
                 <p className="text-slate-500 dark:text-slate-400 mt-2 font-medium">Real-time sign language recognition at your fingertips.</p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <StatCard
                     icon={Activity}
                     label="Total Predictions"
@@ -133,12 +133,6 @@ const Overview = () => {
                     trend={stats?.total_predictions > 0
                         ? `${((stats.high_confidence_matches / stats.total_predictions) * 100).toFixed(0)}% rate`
                         : undefined}
-                />
-                <StatCard
-                    icon={Clock}
-                    label="Avg. Confidence"
-                    value={display(stats?.average_confidence, '%')}
-                    color="bg-amber-500"
                 />
                 <StatCard
                     icon={AlertCircle}

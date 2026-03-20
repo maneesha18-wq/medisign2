@@ -1,0 +1,39 @@
+{
+  "idx_to_label": {
+    "0": "heart_attack",
+    "1": "diabetes",
+    "2": "broken_arm",
+    "3": "fever",
+    "4": "medication",
+    "5": "headache",
+    "6": "hospital",
+    "7": "surgeon",
+    "8": "emergency",
+    "9": "pain"
+  },
+  "label_to_idx": {
+    "heart_attack": 0,
+    "diabetes": 1,
+    "broken_arm": 2,
+    "fever": 3,
+    "medication": 4,
+    "headache": 5,
+    "hospital": 6,
+    "surgeon": 7,
+    "emergency": 8,
+    "pain": 9
+  },
+  "num_classes": 10,
+  "medical_terms": [
+    "heart_attack",
+    "diabetes",
+    "broken_arm",
+    "fever",
+    "medication",
+    "headache",
+    "hospital",
+    "surgeon",
+    "emergency",
+    "pain"
+  ]
+}

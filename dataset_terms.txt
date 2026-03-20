@@ -1,0 +1,30 @@
+Ambulance
+Bandage
+Blood
+Bone
+Breathing
+Cancer
+Chest Pain
+Clinic
+Cough
+Diabetes
+Doctor
+Emergency
+Fever
+Headache
+Heart Attack
+Hospital
+Infection
+Injection
+Medicine
+Nurse
+Operation
+Pain
+Patient
+Pharmacy
+Pregnant
+Prescription
+Stomach
+Symptom
+Virus
+X-ray
