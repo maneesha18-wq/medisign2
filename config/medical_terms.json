@@ -1,0 +1,106 @@
+{
+    "version": "1.0",
+    "description": "Medical sign language vocabulary",
+    "medical_terms": [
+        {
+            "id": 0,
+            "term": "heart_attack",
+            "english": "Heart Attack",
+            "description": "Acute myocardial infarction",
+            "category": "cardiac"
+        },
+        {
+            "id": 1,
+            "term": "diabetes",
+            "english": "Diabetes",
+            "description": "High blood sugar condition",
+            "category": "endocrine"
+        },
+        {
+            "id": 2,
+            "term": "broken_arm",
+            "english": "Broken Arm",
+            "description": "Fracture of the arm",
+            "category": "orthopedic"
+        },
+        {
+            "id": 3,
+            "term": "fever",
+            "english": "Fever",
+            "description": "Elevated body temperature",
+            "category": "symptoms"
+        },
+        {
+            "id": 4,
+            "term": "medication",
+            "english": "Medication",
+            "description": "Prescribed drug treatment",
+            "category": "treatment"
+        },
+        {
+            "id": 5,
+            "term": "headache",
+            "english": "Headache",
+            "description": "Head pain",
+            "category": "symptoms"
+        },
+        {
+            "id": 6,
+            "term": "hospital",
+            "english": "Hospital",
+            "description": "Medical facility",
+            "category": "location"
+        },
+        {
+            "id": 7,
+            "term": "surgeon",
+            "english": "Surgeon",
+            "description": "Medical doctor performing surgery",
+            "category": "professional"
+        },
+        {
+            "id": 8,
+            "term": "emergency",
+            "english": "Emergency",
+            "description": "Urgent medical situation",
+            "category": "urgency"
+        },
+        {
+            "id": 9,
+            "term": "pain",
+            "english": "Pain",
+            "description": "Physical suffering",
+            "category": "symptoms"
+        }
+    ],
+    "statistics": {
+        "total_terms": 10,
+        "categories": [
+            "cardiac",
+            "endocrine",
+            "orthopedic",
+            "symptoms",
+            "treatment",
+            "location",
+            "professional",
+            "urgency"
+        ],
+        "min_samples_per_term": 10,
+        "recommended_samples_per_term": 50
+    },
+    "data_sources": {
+        "WLASL": {
+            "url": "https://github.com/dxli94/WLASL",
+            "description": "10,000+ word American Sign Language dataset",
+            "medical_subset": "Filter for medical terms"
+        },
+        "SignMed": {
+            "description": "Medical sign language corpus (if available)",
+            "terms_count": "Variable"
+        },
+        "Custom": {
+            "description": "Record your own medical sign language videos",
+            "format": "MP4, AVI, MOV (60 fps recommended)"
+        }
+    }
+}

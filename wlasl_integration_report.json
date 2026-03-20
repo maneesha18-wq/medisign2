@@ -1,0 +1,49 @@
+{
+  "total_processed": 0,
+  "total_added": 0,
+  "by_term": {
+    "broken_arm": {
+      "added": 0,
+      "skipped": 0
+    },
+    "diabetes": {
+      "added": 0,
+      "skipped": 0
+    },
+    "emergency": {
+      "added": 0,
+      "skipped": 0
+    },
+    "fever": {
+      "added": 0,
+      "skipped": 0
+    },
+    "headache": {
+      "added": 0,
+      "skipped": 0
+    },
+    "heart_attack": {
+      "added": 0,
+      "skipped": 0
+    },
+    "hospital": {
+      "added": 0,
+      "skipped": 0
+    },
+    "medication": {
+      "added": 0,
+      "skipped": 0
+    },
+    "pain": {
+      "added": 0,
+      "skipped": 0
+    },
+    "surgeon": {
+      "added": 0,
+      "skipped": 0
+    }
+  },
+  "wlasl_source": "C:\\Users\\vishn\\Downloads\\archive\\WLASL_v0.3.json",
+  "output_path": "dataset\\raw_videos",
+  "timestamp": "C:\\Users\\vishn\\OneDrive\\Desktop\\New folder\\medisign"
+}

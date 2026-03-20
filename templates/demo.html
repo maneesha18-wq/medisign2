@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - MediSign</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Main Content */
+        .demo-container {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #999;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-btn:hover {
+            color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Webcam Section */
+        .webcam-section {
+            text-align: center;
+        }
+
+        video#webcam {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            background: #000;
+            margin: 1rem 0;
+            border: 3px solid #667eea;
+            display: block;
+            object-fit: cover;
+        }
+
+        .webcam-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn.secondary {
+            background: #999;
+        }
+
+        .btn.secondary:hover {
+            background: #777;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            margin: 2rem 0;
+        }
+
+        .drop-zone {
+            border: 3px dashed #667eea;
+            border-radius: 10px;
+            padding: 3rem;
+            text-align: center;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .drop-zone:hover {
+            background: #e9ecef;
+            border-color: #764ba2;
+        }
+
+        .drop-zone.active {
+            background: #e3e9ff;
+            border-color: #667eea;
+        }
+
+        .drop-zone p {
+            color: #666;
+            margin: 0.5rem 0;
+        }
+
+        .drop-zone .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        #videoInput {
+            display: none;
+        }
+
+        .upload-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .upload-button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        /* Results Section */
+        .results-section {
+            margin-top: 3rem;
+            display: none;
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .prediction-main {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .prediction-main .label {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .prediction-main .term {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .prediction-main .confidence {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            opacity: 0.95;
+        }
+
+        /* Audio Player */
+        .audio-player {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .audio-player audio {
+            width: 100%;
+            max-width: 400px;
+            height: 40px;
+            outline: none;
+        }
+
+        .audio-label {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .all-predictions {
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .all-predictions.show {
+            display: block;
+        }
+
+        .all-predictions h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .all-predictions h3:hover {
+            background: #f0f0f0;
+        }
+
+        .all-predictions h3::before {
+            content: "▶ ";
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .all-predictions.show h3::before {
+            content: "▼ ";
+            transform: none;
+        }
+
+        .prediction-list {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .prediction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .prediction-item .name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .prediction-item .score {
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Loading State */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Status Messages */
+        .status {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .demo-container {
+                padding: 1.5rem;
+            }
+
+            .prediction-main .term {
+                font-size: 2rem;
+            }
+
+            nav .nav-links {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">🩺 MediSign</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/features">Features</a></li>
+                <li><a href="/demo">Demo</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="demo-container">
+            <h1>🎥 Try MediSign</h1>
+            <p class="subtitle">Test our medical sign language recognition</p>
+
+            <!-- Language Selector -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <label for="languageSelect" style="font-weight: 600; color: #333; font-size: 1.1rem;">🔊 Audio Translation Language:</label>
+                <select id="languageSelect" style="margin-left: 10px; padding: 8px 15px; border-radius: 5px; border: 2px solid #ccc; font-size: 1rem; cursor: pointer; background: #f8f9fa;">
+                    <option value="en">English</option>
+                    <option value="te">Telugu</option>
+                    <option value="hi">Hindi</option>
+                    <option value="mr">Marathi</option>
+                    <option value="ta">Tamil</option>
+                </select>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('webcam')">📹 Webcam</button>
+                <button class="tab-btn" onclick="switchTab('upload')">📤 Upload Video</button>
+            </div>
+
+            <!-- Status Messages -->
+            <div id="statusMessage" class="status"></div>
+
+            <!-- Webcam Tab -->
+            <div id="webcam-tab" class="tab-content active">
+                <div class="webcam-section">
+                    <video id="webcam" playsinline></video>
+                    <div class="webcam-controls">
+                        <button class="btn" id="startBtn" onclick="startWebcam()">Start Camera</button>
+                        <button class="btn secondary" id="captureBtn" onclick="captureFrame()" disabled>Capture &
+                            Recognize</button>
+                        <button class="btn secondary" id="stopBtn" onclick="stopWebcam()" disabled>Stop Camera</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Tab -->
+            <div id="upload-tab" class="tab-content">
+                <div class="upload-section">
+                    <div class="drop-zone" id="dropZone">
+                        <div class="icon">📤</div>
+                        <p><strong>Drag & drop your video here</strong></p>
+                        <p style="font-size: 0.9rem;">or click to select</p>
+                        <button class="upload-button" onclick="document.getElementById('videoInput').click()">
+                            Select Video
+                        </button>
+                    </div>
+                    <input type="file" id="videoInput" accept="video/*">
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Processing video... This may take a moment.</p>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="results-section" style="display: none;">
+                <!-- Main Prediction -->
+                <div class="prediction-main">
+                    <div class="label">Recognized Medical Term</div>
+                    <div class="term" id="predictedTerm">-</div>
+                    <div id="translatedTerm" style="color: #4a90e2; font-size: 1.5rem; font-weight: 600; margin-top: -10px; margin-bottom: 20px; display: none;">-</div>
+                    <div class="confidence" id="confidenceText">Confidence: -</div>
+
+                    <!-- Audio Player -->
+                    <div class="audio-player" id="audioPlayer" style="display: none;">
+                        <audio id="audioElement" controls>
+                            <source id="audioSource" src="" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">🔊 Listen to the recognized term</p>
+                    </div>
+                </div>
+
+                <!-- All Predictions -->
+                <div class="all-predictions">
+                    <h3>📊 All Predictions</h3>
+                    <div class="prediction-list" id="allPredictions">
+                        <!-- Filled by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const videoElement = document.getElementById('webcam');
+        const dropZone = document.getElementById('dropZone');
+        const videoInput = document.getElementById('videoInput');
+        const loading = document.getElementById('loading');
+        const statusMessage = document.getElementById('statusMessage');
+        const resultsSection = document.getElementById('resultsSection');
+
+        let stream = null;
+
+        // Tab switching
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab + '-tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ==================== WEBCAM FUNCTIONS ====================
+        async function startWebcam() {
+            try {
+                showStatus('Requesting camera access...', 'info');
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        width: { ideal: 640 },
+                        height: { ideal: 480 },
+                        facingMode: 'user'
+                    },
+                    audio: false
+                });
+                videoElement.srcObject = stream;
+
+                // Wait for video to be ready
+                videoElement.onloadedmetadata = () => {
+                    videoElement.play().then(() => {
+                        document.getElementById('startBtn').disabled = true;
+                        document.getElementById('captureBtn').disabled = false;
+                        document.getElementById('stopBtn').disabled = false;
+                        showStatus('Camera ready! Click "Capture & Recognize" to capture a video.', 'success');
+                    }).catch(err => {
+                        showStatus('Camera stream started but playback failed: ' + err.message, 'error');
+                    });
+                };
+            } catch (error) {
+                showStatus('Error accessing camera: ' + error.message, 'error');
+            }
+        }
+
+        function stopWebcam() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                videoElement.srcObject = null;
+            }
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('captureBtn').disabled = true;
+            document.getElementById('stopBtn').disabled = true;
+            showStatus('Camera stopped.', 'info');
+        }
+
+        async function captureFrame() {
+            try {
+                showStatus('Capturing 3-second video...', 'info');
+
+                const canvas = document.createElement('canvas');
+                canvas.width = videoElement.videoWidth;
+                canvas.height = videoElement.videoHeight;
+                const ctx = canvas.getContext('2d');
+
+                const canvasStream = canvas.captureStream(30);
+                const mediaRecorder = new MediaRecorder(canvasStream);
+                let chunks = [];
+
+                mediaRecorder.ondataavailable = (e) => {
+                    chunks.push(e.data);
+                };
+
+                mediaRecorder.onstop = async () => {
+                    const blob = new Blob(chunks, { type: 'video/webm' });
+                    await recognizeVideo(blob, 'webcam_capture.webm');
+                };
+
+                let frameCount = 0;
+                const interval = setInterval(() => {
+                    ctx.drawImage(videoElement, 0, 0);
+                    frameCount++;
+                    if (frameCount >= 90) {
+                        clearInterval(interval);
+                        mediaRecorder.stop();
+                    }
+                }, 1000 / 30);
+
+                mediaRecorder.start();
+
+            } catch (error) {
+                showStatus('Error capturing frame: ' + error.message, 'error');
+            }
+        }
+
+        // ==================== FILE UPLOAD FUNCTIONS ====================
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('active');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('active');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('active');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleVideoUpload(files[0]);
+            }
+        });
+
+        dropZone.addEventListener('click', () => {
+            videoInput.click();
+        });
+
+        videoInput.addEventListener('change', () => {
+            if (videoInput.files[0]) {
+                handleVideoUpload(videoInput.files[0]);
+            }
+        });
+
+        function handleVideoUpload(file) {
+            if (!file.type.startsWith('video/')) {
+                showStatus('Please select a valid video file', 'error');
+                return;
+            }
+            recognizeVideo(file, file.name);
+        }
+
+        // ==================== RECOGNITION FUNCTIONS ====================
+        async function recognizeVideo(videoFile, filename) {
+            loading.style.display = 'block';
+            resultsSection.style.display = 'none';
+            statusMessage.style.display = 'none';
+
+            try {
+                const formData = new FormData();
+                formData.append('video', videoFile, filename || 'capture.webm');
+                const selectedLang = document.getElementById('languageSelect').value;
+                formData.append('language', selectedLang);
+
+                showStatus('Uploading and processing...', 'info');
+
+                const response = await fetch('/api/recognize', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    showStatus('Error: ' + data.error, 'error');
+                    return;
+                }
+
+                if (!data.success) {
+                    showStatus('Recognition failed: ' + (data.error || 'Unknown error'), 'error');
+                    return;
+                }
+
+                if (!data.prediction) {
+                    showStatus('Invalid response from server', 'error');
+                    return;
+                }
+
+                displayResults(data);
+                resultsSection.style.display = 'block';
+                showStatus('✓ Recognition successful!', 'success');
+
+            } catch (error) {
+                showStatus('Error: ' + error.message, 'error');
+                console.error('Recognition error:', error);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function displayResults(data) {
+            // Display predicted term and confidence
+            document.getElementById('predictedTerm').textContent = data.prediction.replace(/_/g, ' ').toUpperCase();
+
+            // Display confidence with progress bar effect
+            const confidencePercent = (data.confidence * 100).toFixed(1);
+            document.getElementById('confidenceText').textContent =
+                `Confidence: ${confidencePercent}% ${'█'.repeat(Math.ceil(confidencePercent / 10))}`;
+
+            // Display translation if available
+            const translationElement = document.getElementById('translatedTerm');
+            if (data.translation && data.translation !== data.prediction) {
+                translationElement.textContent = `Translation: ${data.translation}`;
+                translationElement.style.display = 'block';
+            } else {
+                translationElement.style.display = 'none';
+            }
+
+            // Handle audio playback
+            const audioPlayer = document.getElementById('audioPlayer');
+            const audioSource = document.getElementById('audioSource');
+            if (data.audio_url) {
+                audioSource.src = data.audio_url;
+                audioPlayer.style.display = 'block';
+                // Auto-play the audio
+                const audioElement = document.getElementById('audioElement');
+                audioElement.play().catch(err => {
+                    console.log('Audio autoplay prevented by browser');
+                });
+            } else {
+                audioPlayer.style.display = 'none';
+            }
+
+            // Display all predictions (collapsible)
+            const predictions = data.all_predictions;
+            const allPredictionsDiv = document.getElementById('allPredictions');
+            const allPredictionsSection = allPredictionsDiv.parentElement;
+
+            allPredictionsDiv.innerHTML = '';
+
+            const sorted = Object.entries(predictions)
+                .sort(([, a], [, b]) => b - a);
+
+            sorted.forEach(([term, score]) => {
+                const item = document.createElement('div');
+                item.className = 'prediction-item';
+                const scorePercent = (score * 100).toFixed(1);
+                item.innerHTML = `
+                    <span class="name">${term.replace(/_/g, ' ').toUpperCase()}</span>
+                    <span class="score">${scorePercent}%</span>
+                `;
+                allPredictionsDiv.appendChild(item);
+            });
+
+            // Add click handler to expand/collapse predictions
+            const h3 = allPredictionsSection.querySelector('h3');
+            if (h3) {
+                h3.onclick = (e) => {
+                    e.preventDefault();
+                    allPredictionsSection.classList.toggle('show');
+                };
+            }
+        }
+
+        function showStatus(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = `status ${type}`;
+            statusMessage.style.display = 'block';
+        }
+
+        showStatus('Ready! Choose either Webcam or Upload to start.', 'info');
+    </script>
+</body>
+
+</html>

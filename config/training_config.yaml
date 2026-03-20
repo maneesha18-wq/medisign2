@@ -1,0 +1,66 @@
+# Training Configuration for Medical Sign Language Model
+
+training:
+  # Model architecture
+  lstm_units: 64
+  num_lstm_layers: 2
+  attention_heads: 4
+  attention_dim: 16
+  dropout_rate: 0.4
+  
+  # Training hyperparameters
+  epochs: 100
+  batch_size: 16
+  learning_rate: 0.001
+  optimizer: "adam"
+  loss: "categorical_crossentropy"
+  metrics: ["accuracy"]
+  
+  # Early stopping
+  early_stopping:
+    enabled: true
+    patience: 10
+    monitor: "val_loss"
+    
+  # Learning rate scheduling
+  lr_schedule:
+    enabled: true
+    factor: 0.5
+    patience: 5
+    
+  # Checkpointing
+  checkpoint_dir: "models/checkpoints"
+  save_best_only: true
+  
+  # Device
+  device: "gpu"  # or "cpu"
+  mixed_precision: true
+
+# Model output
+model:
+  output_model: "models/sequence_model_medical.keras"
+  tflite_export: true
+  tflite_quantization: ["float32", "fp16", "int8"]
+  
+# Validation and evaluation
+validation:
+  compute_metrics: true
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1_score
+    - confusion_matrix
+  save_predictions: true
+  
+# Data
+data:
+  shuffle_buffer_size: 1000
+  prefetch_size: 10
+
+# Logging and reporting
+logging:
+  verbose: true
+  log_file: "logs/training_medical.log"
+  tensorboard_dir: "logs/tensorboard"
+  save_training_report: true

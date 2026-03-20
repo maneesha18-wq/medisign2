@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - MediSign</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Content */
+        .content {
+            padding: 60px 20px;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .features-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature-item h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">🩺 MediSign</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/features">Features</a></li>
+                <li><a href="/demo">Demo</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>✨ Features</h1>
+            <p>Cutting-edge technology for medical sign language recognition</p>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <div class="container">
+            <!-- Core Features -->
+            <div class="section">
+                <h2>🎯 Core Features</h2>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <h3>Real-Time Video Recognition</h3>
+                        <p>Upload medical sign language videos and get instant recognition results with high accuracy.
+                        </p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>10 Medical Terms</h3>
+                        <p>Recognition of essential medical vocabulary: Heart Attack, Diabetes, Broken Arm, Fever,
+                            Medication, Headache, Hospital, Surgeon, Emergency, Pain.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Confidence Scores</h3>
+                        <p>See the probability scores for all 10 medical terms to understand the model's certainty.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Audio Output</h3>
+                        <p>Text-to-speech conversion provides audio feedback for each recognized term.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Features -->
+            <div class="section">
+                <h2>🧠 AI & Machine Learning</h2>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <h3>BiLSTM + Attention Architecture</h3>
+                        <p>State-of-the-art bidirectional LSTM with attention mechanism for sequence modeling of sign
+                            language patterns.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>MobileNetV2 Feature Extraction</h3>
+                        <p>Pre-trained CNN backbone for efficient 1280-dimensional feature vectors from video frames.
+                        </p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Temporal Understanding</h3>
+                        <p>Captures temporal patterns across 60 frames, understanding sign language as a sequence of
+                            movements.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>High Accuracy</h3>
+                        <p>98% accuracy on test dataset with continuous improvement through feedback and retraining.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Platform Features -->
+            <div class="section">
+                <h2>🚀 Platform Features</h2>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <h3>Web-Based Interface</h3>
+                        <p>No installation required. Access from any modern web browser on desktop or mobile.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Privacy & Security</h3>
+                        <p>All video processing happens locally on your server. No data is sent to external services.
+                        </p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Scalable Architecture</h3>
+                        <p>Built with Flask and optimized for production deployment with GPU support.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>REST API</h3>
+                        <p>Full API endpoints for integration with other healthcare applications.</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Dataset -->
+            <div class="section">
+                <h2>📚 Dataset</h2>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <h3>124 Training Videos</h3>
+                        <p>Diverse dataset of medical sign language videos across all 10 medical terms.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>WLASL Integration</h3>
+                        <p>Enhanced with World Sign Language dataset for better generalization and robustness.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>High Quality</h3>
+                        <p>Cleaned and validated dataset with only medical-relevant content. No corrupted files.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 MediSign. Making healthcare accessible through sign language recognition.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

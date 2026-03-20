@@ -1,0 +1,33 @@
+{
+    "model": {
+        "architecture": "bilateral_lstm",
+        "input_dim": 1280,
+        "hidden_dim": 256,
+        "num_layers": 2,
+        "bidirectional": true,
+        "dropout": 0.3,
+        "attention": true
+    },
+    "training": {
+        "epochs": 50,
+        "batch_size": 16,
+        "learning_rate": 0.001,
+        "optimizer": "adam",
+        "loss": "categorical_crossentropy",
+        "validation_split": 0.2,
+        "early_stopping": true,
+        "patience": 5
+    },
+    "data": {
+        "features_path": "dataset/features/features.npz",
+        "labels_path": "dataset/features/labels.npz",
+        "num_frames": 60,
+        "feature_dim": 1280
+    },
+    "output": {
+        "model_path": "models/bilstm_attention.h5",
+        "weights_path": "models/bilstm_weights.h5",
+        "history_path": "training_history.json"
+    },
+    "device": "auto"
+}

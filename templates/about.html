@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - MediSign</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Content */
+        .content {
+            padding: 60px 20px;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .highlight-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .highlight-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: #667eea;
+        }
+
+        .timeline-item {
+            margin-bottom: 2rem;
+            width: 45%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: 0;
+            text-align: right;
+            padding-right: 5%;
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-left: 55%;
+            padding-left: 5%;
+        }
+
+        .timeline-content {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            border-left: none;
+            border-right: 4px solid #667eea;
+        }
+
+        .timeline-content h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .goals {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .goal-card {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .goal-card .icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .goal-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                display: none;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding: 0;
+                margin-left: 0 !important;
+                text-align: left !important;
+            }
+
+            .timeline-content {
+                border-left: 4px solid #667eea;
+                border-right: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">🩺 MediSign</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/features">Features</a></li>
+                <li><a href="/demo">Demo</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>About MediSign</h1>
+            <p>Revolutionizing healthcare communication through AI</p>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <div class="container">
+            <!-- Mission -->
+            <div class="section">
+                <h2>🎯 Our Mission</h2>
+                <p>
+                    MediSign is dedicated to breaking down communication barriers in healthcare for deaf and hard of
+                    hearing individuals.
+                    Using cutting-edge artificial intelligence and deep learning, we've built a system that instantly
+                    recognizes medical
+                    sign language and converts it to text and speech.
+                </p>
+                <p>
+                    Our goal is to make healthcare more inclusive and accessible by providing real-time translation of
+                    medical sign language,
+                    empowering medical professionals and patients to communicate effectively.
+                </p>
+            </div>
+
+            <!-- Why It Matters -->
+            <div class="section">
+                <h2>💡 Why It Matters</h2>
+                <div class="highlights">
+                    <div class="highlight-card">
+                        <div class="icon">👥</div>
+                        <h3>Accessibility</h3>
+                        <p>Millions of deaf individuals deserve equal access to healthcare services</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="icon">⚡</div>
+                        <h3>Efficiency</h3>
+                        <p>Faster communication leads to better healthcare outcomes</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="icon">🤝</div>
+                        <h3>Empowerment</h3>
+                        <p>Technology that respects and enables communication independence</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <div class="section">
+                <h2>🔧 How It Works</h2>
+                <p>
+                    MediSign uses a sophisticated deep learning pipeline to analyze medical sign language videos:
+                </p>
+                <ol style="margin-left: 2rem; margin-top: 1rem;">
+                    <li style="margin-bottom: 1rem;">
+                        <strong>Video Processing:</strong> The system extracts 60 frames from your video at consistent
+                        intervals
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <strong>Feature Extraction:</strong> MobileNetV2, a pre-trained neural network, converts each
+                        frame into a 1280-dimensional feature vector
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <strong>Sequence Modeling:</strong> A BiLSTM model with attention mechanism analyzes the
+                        temporal sequence of movements
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <strong>Recognition:</strong> The model predicts which of 10 medical terms was signed
+                    </li>
+                    <li>
+                        <strong>Output:</strong> Results are displayed with confidence scores and audio playback
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Technical Achievements -->
+            <div class="section">
+                <h2>🏆 Technical Achievements</h2>
+                <div class="highlights">
+                    <div class="highlight-card">
+                        <div class="icon">📊</div>
+                        <h3>98% Accuracy</h3>
+                        <p>State-of-the-art performance on medical sign language recognition</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="icon">⚙️</div>
+                        <h3>Advanced Architecture</h3>
+                        <p>BiLSTM + Attention with 4.92M parameters</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="icon">📈</div>
+                        <h3>Scalable Dataset</h3>
+                        <p>124+ training videos from WLASL and YouTube sources</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Future Goals -->
+            <div class="section">
+                <h2>🚀 Future Goals</h2>
+                <div class="goals">
+                    <div class="goal-card">
+                        <div class="icon">🌍</div>
+                        <h3>Multi-Language Support</h3>
+                        <p>Expand to recognize sign language from different countries and medical systems</p>
+                    </div>
+                    <div class="goal-card">
+                        <div class="icon">📱</div>
+                        <h3>Mobile App</h3>
+                        <p>Native iOS and Android applications for healthcare on the go</p>
+                    </div>
+                    <div class="goal-card">
+                        <div class="icon">🏥</div>
+                        <h3>Hospital Integration</h3>
+                        <p>Deep integration with electronic health record (EHR) systems</p>
+                    </div>
+                    <div class="goal-card">
+                        <div class="icon">📚</div>
+                        <h3>Expanded Vocabulary</h3>
+                        <p>Recognition of 100+ medical terms covering comprehensive healthcare vocabulary</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team -->
+            <div class="section">
+                <h2>👨‍💻 Development</h2>
+                <p>
+                    MediSign was developed using modern AI practices and best practices in healthcare technology.
+                    Our team leveraged state-of-the-art machine learning frameworks including TensorFlow/Keras,
+                    OpenCV for computer vision, and Flask for web deployment.
+                </p>
+                <p style="margin-top: 1.5rem;">
+                    <strong>Technology Used:</strong>
+                    Python 3.12 • TensorFlow/Keras • BiLSTM • Attention Mechanism • MobileNetV2 • Flask • OpenCV • WLASL
+                    Dataset
+                </p>
+            </div>
+
+            <!-- Contact -->
+            <div class="section">
+                <h2>📞 Contact & Support</h2>
+                <p>
+                    Have questions or feedback? We'd love to hear from you!
+                </p>
+                <p style="margin-top: 1rem;">
+                    <strong>Email:</strong> support@medisign.ai<br>
+                    <strong>Website:</strong> medisign.ai<br>
+                    <strong>GitHub:</strong> github.com/medisign
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 MediSign. Making medical communication accessible to everyone.</p>
+            <p style="margin-top: 1rem; opacity: 0.8; font-size: 0.9rem;">
+                Empowering deaf and hard of hearing individuals through technology
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

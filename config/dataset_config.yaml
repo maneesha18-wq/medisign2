@@ -1,0 +1,51 @@
+# Dataset Configuration
+# Define paths, settings for real medical sign language data
+
+dataset:
+  # Source settings
+  raw_videos_dir: "dataset/raw_videos"
+  preprocessed_dir: "dataset/preprocessed"
+  features_dir: "dataset/features"
+  splits_dir: "dataset/splits"
+  
+  # Video processing
+  target_fps: 30
+  num_frames: 60
+  frame_size: [224, 224]
+  
+  # Feature extraction
+  feature_backbone: "mobilenetv2"
+  feature_dim: 1280
+  
+  # Train/Val/Test split
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+  
+  # Data augmentation (for training)
+  augmentation:
+    enabled: true
+    noise_prob: 0.3
+    scale_prob: 0.3
+    temporal_shift_prob: 0.2
+    jitter_prob: 0.2
+
+# Medical terms vocabulary
+medical_config:
+  terms_file: "config/medical_terms.json"
+  min_samples_per_term: 10
+  
+# Preprocessing parameters
+preprocessing:
+  # Video loading
+  skip_frames: 0
+  normalize: true
+  
+  # Frame extraction
+  method: "uniform"  # uniform or random sampling
+  interpolation: "bilinear"
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  output_dir: "logs"
